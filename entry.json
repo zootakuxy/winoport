@@ -1,0 +1,26 @@
+{
+  "emby.zootakuxy.kozow.com": {
+    "address": "127.0.0.1",
+    "port": 8096,
+    "protocol": "http",
+    "opts": {
+
+    }
+  },
+  "plex.zootakuxy.kozow.com": {
+    "address": "127.0.0.1",
+    "port": 32400,
+    "protocol": "http",
+    "opts": {
+
+    },
+    "router.zootakuxy.kozow.com":{
+      "address": "192.168.100.1",
+      "port": 80,
+      "protocol": "http",
+      "opts": {
+  
+      }
+    }
+  }
+}

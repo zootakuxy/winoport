@@ -1,0 +1,15 @@
+brainsoft@server:~/app/dev/anchorio$ sudo node aio resolve --noPort emby.zootakuxy.brainsoft.com --domain emby.zootakuxy.aio
+[sudo] password for brainsoft:
+AIO-RESOLVE ===================================================================================================================
+APPLICATION              emby
+SERVER                   zootakuxy
+IDENTIFIER               zootakuxy.aio
+AIOHOST                  emby.zootakuxy.aio
+AIOHOST                  127.75.0.11
+GETAWAY-RELEASE          3
+GETAWAY-RELEASE-TIMEOUT  90000
+FILE                     /home/brainsoft/app/dev/anchorio/etc/entry/resolve/127.75.0.11-emby.zootakuxy.aio.resolve.conf
+LINKED NO-PORT ================================================================================================================
+NOPORT DOMAIN:           zootakuxy.stream.brainsoftstp.com
+PORT:                    36900
+FILE:                    /home/brainsoft/app/prod/noport/var/entry/aio.zootakuxy.stream.brainsoftstp.com_127.75.0.11.entry.conf
