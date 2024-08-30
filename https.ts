@@ -1,8 +1,7 @@
 import https from "https";
 import {CertBot} from "./certbot";
 import Path from "path";
-import express from "express";
-import {proxyIn} from "./proxy";
+import {app} from "./proxy";
 
 const certBot = new CertBot( {
     dirs: {
@@ -14,7 +13,6 @@ const certBot = new CertBot( {
     }, email: "danielcarvalho555@gmail.com"
 });
 
-const  app = express();
 
 let server =   https.createServer( {
     async SNICallback( domain, callback ){
@@ -34,11 +32,10 @@ let server =   https.createServer( {
         if( exists ){
             loadDomain()
         } else  {
+            console.log( "Certificado não esta instalado!")
             callback( new Error( `Não foi encontrado nenhum SSL para o dominio requisitado!` ) );
         }
     }
 }, app );
 
-
-proxyIn( app, "https" );
 server.listen( 443 );

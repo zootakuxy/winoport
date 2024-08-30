@@ -2,5 +2,5 @@
   "watch": [ "./" ],
   "ext": "js",
   "ignore": [ "./*.spec.js" ],
-  "exec": "node https.js"
+  "exec": "node server.js"
 }
