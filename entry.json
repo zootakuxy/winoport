@@ -7,6 +7,14 @@
 
     }
   },
+  "flocoto.zootakuxy.kozow.com": {
+    "address": "127.0.0.1",
+    "port": 8888,
+    "protocol": "http",
+    "opts": {
+
+    }
+  },
   "plex.zootakuxy.kozow.com": {
     "address": "127.0.0.1",
     "port": 32400,
