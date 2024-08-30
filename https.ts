@@ -2,40 +2,54 @@ import https from "https";
 import {CertBot} from "./certbot";
 import Path from "path";
 import {app} from "./proxy";
+import {ElevateChild} from "kitres/src/core/system/elevate";
+import {ElevateRequest} from "./elevate";
 
-const certBot = new CertBot( {
-    dirs: {
-        configs: "C:\\Certbot",
-        work: "C:\\Certbot\\work",
-        logs: "C:\\Certbot\\workLogs",
-        webroot: Path.join( __dirname, /*language=file-reference*/ "./www"),
-        response: "C:\\Certbot\\workResponse",
-    }, email: "danielcarvalho555@gmail.com"
-});
+function startServer() {
+    const certBot = new CertBot({
+        dirs: {
+            configs: "C:\\Certbot",
+            work: "C:\\Certbot\\work",
+            logs: "C:\\Certbot\\workLogs",
+            webroot: Path.join(__dirname, /*language=file-reference*/ "./www"),
+            response: "C:\\Certbot\\workResponse",
+        }, email: "danielcarvalho555@gmail.com"
+    });
 
 
-let server =   https.createServer( {
-    async SNICallback( domain, callback ){
-        let exists = certBot.exists( domain );
-        console.log( "context of domain exists?", "domain", domain, "exists?", exists );
-        let loadDomain = ()=>{
-            certBot.loadContextOf( domain ).then( ctxResponse => {
-                console.log( "get context certificate to domain", domain, ctxResponse.result )
-                if( ctxResponse.result ) callback( null, ctxResponse.context );
-                else{
-                    console.log( ctxResponse.message );
-                    callback( ctxResponse.error|| new Error( ctxResponse.message ) );
-                }
-            })
+    let server = https.createServer({
+        async SNICallback(domain, callback) {
+            let exists = certBot.exists(domain);
+            console.log("context of domain exists?", "domain", domain, "exists?", exists);
+            let loadDomain = () => {
+                certBot.loadContextOf(domain).then(ctxResponse => {
+                    console.log("get context certificate to domain", domain, ctxResponse.result)
+                    if (ctxResponse.result) callback(null, ctxResponse.context);
+                    else {
+                        console.log(ctxResponse.message);
+                        callback(ctxResponse.error || new Error(ctxResponse.message));
+                    }
+                })
+            }
+
+            if (exists) {
+                loadDomain()
+            } else {
+                console.log("Certificado não esta instalado!")
+                callback(new Error(`Não foi encontrado nenhum SSL para o dominio requisitado!`));
+            }
         }
+    }, app);
 
-        if( exists ){
-            loadDomain()
-        } else  {
-            console.log( "Certificado não esta instalado!")
-            callback( new Error( `Não foi encontrado nenhum SSL para o dominio requisitado!` ) );
-        }
-    }
-}, app );
+    server.listen(443);
+}
 
-server.listen( 443 );
+export function main( sys:ElevateChild<ElevateRequest> ){
+    sys.on( "http", () => {
+        startServer();
+    });
+}
+
+if( require.main.filename === __filename ){
+    startServer()
+}
