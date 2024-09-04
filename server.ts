@@ -5,7 +5,5 @@ import {ElevatorServer} from "kitres/src/core/system/elevator";
 import {ElevateRequest} from "./elevate";
 
 let launcher:ElevatorServer<ElevateRequest> = System.elevateRequire<IpcPostgresInstanceEvent>( Path.join( __dirname, /*language=file-reference*/ "./launcher.js"), {
-
 });
-c
 
